@@ -1,6 +1,6 @@
 FROM node:alpine
 
-WORKDIR '/app'
+WORKDIR '/my-react-app'
 
 COPY package.json .
 RUN npm install
