@@ -1,13 +1,15 @@
-Pipeline
-{
-agent any
-  satges{
-    stage ('Pull'){
-      steps{
-        script{
-          checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/soulaymenkammoun/reactapp.git']])
-    }
-      }
-    }
-  }
-}
+pipeline {
+    agent any
+
+    stages {
+        stage('Gut hub pull stage ') {
+            steps {
+                script{
+                    checkout([$class: 'GitSCM' , branches: [[name: '*/master']] ,
+                       userRemoteConfigs: [[
+                           credentialsId: 'Githubcredentials',
+                           url :'https://github.com/soulaymenkammoun/reactapp.git']]])
+                }
+            
+            }
+        }
