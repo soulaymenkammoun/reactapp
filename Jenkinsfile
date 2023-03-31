@@ -7,7 +7,7 @@ pipeline {
                 script{
                     checkout([$class: 'GitSCM' , branches: [[name: '*/master']] ,
                        userRemoteConfigs: [[
-                           credentialsId: 'Githubcredentials',
+                           
                            url :'https://github.com/soulaymenkammoun/reactapp.git']]])
                 }
             
