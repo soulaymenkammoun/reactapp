@@ -24,10 +24,16 @@ pipeline {
             }
         }
 
+        	 stage('Docker login') {
+    	agent any
+      steps {
+        sh 'echo "login Docker ...."'
+      	sh 'docker login -u soulaymendocker123 -p 123456789'
+      }
+  }
         stage('Push Docker Image') {
             steps {
-                withCredentials([string(credentialsId: 'dockerhub')]){
-                    script {
+                script {
                         def imageName = "reactapp"
                         def imageTag = "latest"
                         def dockerImage = docker.image("${imageName}:${imageTag}")
