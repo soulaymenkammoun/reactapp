@@ -26,7 +26,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: '123456789', usernameVariable: 'soulaymendocker123')]) {
+                withCredentials([string(credentialsId: 'docerhub', variable: 'Docker')]){
                     script {
                         def imageName = "reactapp"
                         def imageTag = "latest"
