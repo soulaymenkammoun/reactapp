@@ -37,7 +37,16 @@ environment {
                     }
                 }
             }
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
         
-        
+    }
+       post {
+        always {
+            sh 'docker-compose down'
+        }
     }
 }
