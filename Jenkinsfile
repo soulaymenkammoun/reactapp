@@ -1,18 +1,16 @@
 pipeline {
     agent any
-environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-  }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    }
     stages {
         stage('Gut hub pull stage ') {
             steps {
                 script{
                     checkout([$class: 'GitSCM' , branches: [[name: '*/master']] ,
                        userRemoteConfigs: [[
-                           
                            url :'https://github.com/soulaymenkammoun/reactapp.git']]])
                 }
-            
             }
         }
         stage('Build Docker Image') {
@@ -22,14 +20,13 @@ environment {
                 }
             }
         }
-
-        	 stage('Docker login') {
-    	agent any
-      steps {
-        sh 'echo "login Docker ...."'
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-  }
+        stage('Docker login') {
+            agent any
+            steps {
+                sh 'echo "login Docker ...."'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
         stage('Push Docker Image') {
             steps {
                 script {
@@ -37,16 +34,5 @@ environment {
                     }
                 }
             }
-        stage('Deploy') {
-            steps {
-                sh 'docker-compose up -d'
-            }
-        }
-        
-    }
-       post {
-        always {
-            sh 'docker-compose down'
-        }
     }
 }
