@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+  }
     stages {
         stage('Gut hub pull stage ') {
             steps {
@@ -16,10 +18,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageName = "reactapp"
-                    def imageTag = "latest"
-                    def dockerfile = "Dockerfile"
-                    def dockerImage = docker.build("${imageName}:${imageTag}", "-f ${dockerfile} .")
+                    sh 'docker build -t soulaymendocker123/reactapp:latest .'
                 }
             }
         }
@@ -28,16 +27,13 @@ pipeline {
     	agent any
       steps {
         sh 'echo "login Docker ...."'
-      	sh 'docker login -u soulaymendocker123 -p 123456789'
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
       }
   }
         stage('Push Docker Image') {
             steps {
                 script {
-                        def imageName = "reactapp"
-                        def imageTag = "latest"
-                        def dockerImage = docker.image("${imageName}:${imageTag}")
-                        dockerImage.push()
+                        sh 'docker push soulaymendocker123/reactapp:latest'
                     }
                 }
             }
