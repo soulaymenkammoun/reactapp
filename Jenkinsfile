@@ -15,7 +15,7 @@ pipeline {
         }
          stage('Build image') {
             docker build -t reactapp
-       dockerImage = docker.build("soulaymendocker123/reactapp:latest")
+       
     }
     
          stage('Push image') {
