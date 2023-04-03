@@ -14,13 +14,13 @@ pipeline {
             }
         }
          stage('Build image') {
-            
+            docker build -t reactapp
        dockerImage = docker.build("soulaymendocker123/reactapp:latest")
     }
     
          stage('Push image') {
-             withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-                 dockerImage.push()
+             docker push soulaymendocker123/reactapp:latest
+           
         }
     }
     }
